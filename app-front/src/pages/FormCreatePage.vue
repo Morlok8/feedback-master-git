@@ -23,7 +23,7 @@
                 " rows="6" v-model="data.description" />
             </label>
             <!--Star Raiting-->
-            <StarRaiting :value="data.raiting" :total-rating="totalRating" @update-rating="data.raiting = $event" ></StarRaiting>
+            <StarRaiting :value="data.raiting" :total-rating="totalRating" @update-rating="data.raiting = $event" :enabled = "true"></StarRaiting>
             <!--//-->
             <button class="
                 grid place-content-center w-full p-2 mt-1 border-2 border-gray-300 rounded-md shadow-sm outline-none bg-white
@@ -49,12 +49,10 @@ const data = reactive({
     description: '',
     title: '',
     datetime: '',
-    raiting: 'number',
+    raiting: 0,
 });
 
-//const rating = ref(3); 
 const totalRating = ref(5);
-
 
 const sendForm = async () => {
     try {
