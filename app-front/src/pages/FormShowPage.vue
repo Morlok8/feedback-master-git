@@ -48,7 +48,7 @@ const feedback = reactive({
 });
 
 const datetime = computed(() => {
-    return new Date(Number(feedback.datetime)).toLocaleString()
+    return new Date(Number(feedback.datetime)*1000).toLocaleString()
 })
 
 onBeforeMount(() => {

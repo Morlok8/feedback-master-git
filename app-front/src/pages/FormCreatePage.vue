@@ -22,13 +22,9 @@
                     focus-visible:outline-brand-2 outline-2
                 " rows="6" v-model="data.description" />
             </label>
-            <label class="flex flex-col gap-y-0.5 text-gray-500 focus-within:text-brand-2">
-                <span class="text-lg">Описание</span>
-                <textarea class="
-                    px-3 py-2 border-2 border-gray-300 rounded-md shadow-inner
-                    focus-visible:outline-brand-2 outline-2
-                " rows="6" v-model="data.raiting" />
-            </label>
+            <!--Star Raiting-->
+            <StarRaiting :value="data.raiting" :total-rating="totalRating" @update-rating="data.raiting = $event" ></StarRaiting>
+            <!--//-->
             <button class="
                 grid place-content-center w-full p-2 mt-1 border-2 border-gray-300 rounded-md shadow-sm outline-none bg-white
                 text-lg font-semibold tracking-wide text-gray-400
@@ -42,16 +38,23 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { ref } from "vue";
+
 import axios from 'axios';
 import env from '@/env.json'
 import router from '@/router';
+import StarRaiting from '@/components/StarRaiting.vue';
 
 const data = reactive({
     description: '',
     title: '',
     datetime: '',
-    raiting: '',
+    raiting: 'number',
 });
+
+//const rating = ref(3); 
+const totalRating = ref(5);
+
 
 const sendForm = async () => {
     try {
@@ -68,7 +71,8 @@ const sendFormImpl = async () => {
     return await axios.post<StoreFeedbackResponse>(env.backend_url + '/feedbacks', {
         'description': data.description,
         'title': data.title,
-        'datetime':  new Date(data.datetime).getTime()
+        'datetime':  new Date(data.datetime).getTime(),
+        'raiting': data.raiting
     });
 }
 
